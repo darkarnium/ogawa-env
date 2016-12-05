@@ -1,0 +1,10 @@
+[Unit]
+Description=Ogawa Service
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/env python <%= @script %>
+
+[Install]
+WantedBy=multi-user.target
