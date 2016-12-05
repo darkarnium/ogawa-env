@@ -15,7 +15,7 @@ suites:
   - name: default
     run_list:
       - recipe[ogawa-env::base]
-      - recipe[ogawa-env::app]
       - recipe[ogawa-env::elasticsearch]
+      - recipe[ogawa-env::app]
     verifier:
     attributes:

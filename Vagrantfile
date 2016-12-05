@@ -10,8 +10,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.omnibus.chef_version = 'latest'
   end
 
-  config.vm.synced_folder '../ogawa', '/opt/ogawa'
-
   config.vm.network :private_network, type: 'dhcp'
   config.vm.network 'forwarded_port', guest: 5601, host: 5601
   config.vm.network 'forwarded_port', guest: 9200, host: 9200
