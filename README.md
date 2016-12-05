@@ -37,7 +37,7 @@ The following attributes should be overridden through this cookbooks, or another
 * `node['ogawa']['conf']['bus']['input']['queue']`
   * The SQS URL of the Amazon Web Services (AWS) queue the Ogawa service should use when long-polling for results.
 * `node['ogawa']['conf']['bus']['output']['elasticsearch']`
-  * The HTTP URL of the ElasticSearch cluster topic the Ogawa service should use when posting results.
+  * The HTTP URL of the ElasticSearch cluster the Ogawa service should use when posting results.
 
 ## Additional Reading
 
