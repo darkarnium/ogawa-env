@@ -1,10 +1,14 @@
 [Unit]
 Description=Ogawa Service
-After=multi-user.target
+After=syslog.target
 
 [Service]
-Type=idle
+Type=simple
+User=<%= @user %>
+WorkingDirectory=<%= @dir %>
 ExecStart=/usr/bin/env python <%= @script %>
+StandardOutput=syslog
+StandardError=syslog
 
 [Install]
 WantedBy=multi-user.target

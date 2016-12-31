@@ -19,6 +19,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.provision :chef_solo do |chef|
+    chef.json = {
+      'ogawa' => {
+        'conf' => {
+          'bus' => {
+            'input' => {
+              'queue' => ''
+            },
+            'output' => {
+              'elasticsearch' => 'http://127.0.0.1:9200/'
+            }
+          }
+        }
+      }
+    }
     chef.run_list = [
       'recipe[ogawa-env::base]',
       'recipe[ogawa-env::elasticsearch]',

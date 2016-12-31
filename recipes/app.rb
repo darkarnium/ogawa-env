@@ -11,9 +11,16 @@ end
 
 # Fetch and install the ogawa from develop.
 git node['ogawa']['home'] do
-  repository node['ogawa']['git']['path']
-  reference node['ogawa']['git']['branch']
   action :sync
+  notifies :run, 'execute[chown-ogawa]', :immediately
+  reference node['ogawa']['git']['branch']
+  repository node['ogawa']['git']['path']
+end
+
+execute 'chown-ogawa' do
+  command "chown -R #{node['ogawa']['user']} #{node['ogawa']['home']}"
+  action :nothing
+  notifies :restart, 'service[ogawa]', :delayed
 end
 
 # Ensure Python 2 is installed.
@@ -49,6 +56,8 @@ template '/etc/systemd/system/ogawa.service' do
   group 'root'
   source 'ogawa.service.erb'
   variables(
+    dir: node['ogawa']['home'],
+    user: node['ogawa']['user'],
     script: "#{node['ogawa']['home']}/ogawa.py"
   )
   notifies :run, 'execute[systemctl-daemon-reload]', :immediately
