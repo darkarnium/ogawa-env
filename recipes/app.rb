@@ -5,8 +5,9 @@
 
 # Ensure a user exists.
 user node['ogawa']['user'] do
-  manage_home false
   shell '/bin/bash'
+  home node['ogawa']['home']
+  manage_home false
 end
 
 # Fetch and install the ogawa from develop.
