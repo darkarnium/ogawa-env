@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: ogawa-env
+# Cookbook Name:: om-env-ogawa
 # Recipe:: elasticsearch
 #
 
@@ -36,5 +36,5 @@ template '/etc/kibana/kibana.yml' do
   source 'kibana.yml.erb'
   owner 'root'
   group 'root'
-  mode 00744
+  mode '0744'
 end

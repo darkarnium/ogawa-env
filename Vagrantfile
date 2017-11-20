@@ -1,42 +1,18 @@
-VAGRANTFILE_API_VERSION = '2'
-
-Vagrant.require_version '>= 1.5.0'
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+Vagrant.configure('2') do |config|
   config.vm.box = 'ubuntu/xenial64'
-  config.vm.hostname = 'ogawa-dev'
+  config.vm.box_check_update = true
 
-  config.berkshelf.enabled = true
-  if Vagrant.has_plugin?('vagrant-omnibus')
-    config.omnibus.chef_version = 'latest'
+  config.vm.provider 'virtualbox' do |vb|
+    vb.gui = false
+    vb.memory = '2048'
   end
 
-  config.vm.network :private_network, type: 'dhcp'
-  config.vm.network 'forwarded_port', guest: 5601, host: 5601
-  config.vm.network 'forwarded_port', guest: 9200, host: 9200
+  # Mount scratch directory and Chef cookbook(s).
+  config.vm.synced_folder '../ogawa', '/opt/ogawa'
 
-  config.vm.provider :virtualbox do |vb|
-    vb.customize ['modifyvm', :id, '--memory', '2048']
-  end
+  # Bus the provisioning cookbook to the machine.
+  config.vm.provision 'file', source: './om-env-ogawa', destination: '/var/tmp/provisioning/'
 
-  config.vm.provision :chef_solo do |chef|
-    chef.json = {
-      'ogawa' => {
-        'conf' => {
-          'bus' => {
-            'input' => {
-              'queue' => ''
-            },
-            'output' => {
-              'elasticsearch' => 'http://127.0.0.1:9200/'
-            }
-          }
-        }
-      }
-    }
-    chef.run_list = [
-      'recipe[ogawa-env::base]',
-      'recipe[ogawa-env::elasticsearch]',
-      'recipe[ogawa-env::app]'
-    ]
-  end
+  # Provision the VM with Chef.
+  config.vm.provision 'shell', path: 'deploy-local.sh'
 end

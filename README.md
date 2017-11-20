@@ -1,43 +1,52 @@
-# ogawa-env
+# om-env-ogawa
 
-Provides a Chef environment cookbook for provisioning an Ogawa node.
+Provides a Chef environment cookbook for provisioning Ogawa nodes.
 
-## Requirements
+## Getting Started
 
-### Platforms
+### AWS Keys and SQS ARNs
 
-Per the `.kitchen.yml` in the root of this cookbook, support is as follows:
+To begin, make sure that you have an SQS Queue and associated keys for an IAM user / role which is able to `DeleteMessage`, `GetQueueUrl`, and `ReceiveMessage` on this queue. `cloud-config.yaml` and / or `deploy-local.sh` will need to be updated with these values - replacing the current `X`, `Y`, and `Z` values respectively - prior to launch!
 
-* Ubuntu 16.04
+See the Ogawa documentation - linked below - for more information.
 
-Although this cookbook may be compatible with other distributions, it only contains a `systemd` compatible init script for the Ogawa service.
+### This Machine
 
-### Chef
+If for some reason you want to install 41h on the machine that you have checked the repository out onto, perform the following:
 
-* Chef >= 12.X
+1) Run `deploy-local.sh` from this directory.
+2) Wait.
 
-### Cookbooks
+### Digital Ocean
 
-* apt (~> 5.0.0)
-* ntp (~> 3.2.0)
-* ark (~> 2.0.0)
-* java (~> 1.42.0)
-* sysctl (~> 0.8.0)
-* poise-python (~> 1.5.1)
-* elasticsearch (~> 3.0.1)
+To deploy a new Ogawa node into Digital Ocean (via the API), perform the following:
 
-## Configuration
+1) Run `pip install -r requirements.txt` from this directory.
+2) Run `python2.7 deploy-digitalocean.py --api-token <DO_API_TOKEN>` from this directory.
+3) Wait.
 
-A configuration shim has been provided with this cookbook which will attempt to 'deep merge' a set of Chef attributes with the Ogawa distribution configuration provided by the Ogawa service. The net result of this is that any deployment specific configuration can be added to either this environment cookbook or a Chef server / override JSON document, which will take precedence over the Ogawa distribution configuration (`ogawa.dist.yaml`).
+### Vagrant
 
-## Attributes
+To deploy a local virtual machine via Vagrant, perform the following:
 
-The following attributes should be overridden through this cookbooks, or another mechanism (such as attribute JSON, or Chef server attributes).
+1) First up, ensure the following dependencies are installed and configured:
+  * Vagrant
+    * https://www.vagrantup.com/
+    * No configuration required (if using the VirtualBox driver).
+  * VirtualBox
+    * https://www.virtualbox.org/wiki/Downloads
+    * Ensure Intel VT or AMD-V is configured on the system.
+    * Change the virtual machine default directory (optional).
+2) Run `vagrant up` from this directory.
+3) Wait.
+4) Login using `vagrant ssh`.
+5) When done, run `vagrant destroy` to tear-down the machine once again.
 
-* `node['ogawa']['conf']['bus']['input']['queue']`
-  * The SQS URL of the Amazon Web Services (AWS) queue the Ogawa service should use when long-polling for results.
-* `node['ogawa']['conf']['bus']['output']['elasticsearch']`
-  * The HTTP URL of the ElasticSearch cluster the Ogawa service should use when posting results.
+**Tip!** If running under Windows, a command-line compatible SSH client is required to be in the user's path, or things will fail. 'Git Bash' from https://git-scm.com/downloads works well for this, just make sure that all commands are run inside of 'Git Bash' instead of PowerShell or CMD.
+
+## Problems?
+
+Raise a GitHub issue, or fix it and raise a PR :)
 
 ## Additional Reading
 
