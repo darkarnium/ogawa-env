@@ -16,7 +16,7 @@ runcmd:
   # Check-out the environment cookbook.
   - git clone https://github.com/darkarnium/om-env-ogawa.git /var/tmp/provisioning
   # Create the Chef zero repository.
-  - cd /var/tmp/provisioning/om-env-kako/
+  - cd /var/tmp/provisioning/om-env-ogawa/
   - berks vendor
   - mkdir -p /var/tmp/chef
   - mv ./berks-cookbooks /var/tmp/chef/cookbooks
