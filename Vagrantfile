@@ -7,6 +7,10 @@ Vagrant.configure('2') do |config|
     vb.memory = '2048'
   end
 
+  # Forward ports for ElasticSearch and Kibana.
+  config.vm.network 'forwarded_port', guest: 5601, host: 5601
+  config.vm.network 'forwarded_port', guest: 9200, host: 9200
+
   # Mount scratch directory and Chef cookbook(s).
   config.vm.synced_folder '../ogawa', '/opt/ogawa'
 

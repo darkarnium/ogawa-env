@@ -16,7 +16,8 @@ default['om-env-ogawa']['iptables']['management'] = [
 
 # List of ports to permit from all.
 default['om-env-ogawa']['iptables']['permit'] = [
-  '5601',
+  # '5601',
+  # '9200',
 ]
 
 # Ensure correct ruby is used

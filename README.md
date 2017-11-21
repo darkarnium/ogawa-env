@@ -2,6 +2,10 @@
 
 Provides a Chef environment cookbook for provisioning Ogawa nodes.
 
+## :fire: Kibana and ElasticSearch Access :fire:
+
+Out of the box ElasticSearch and Kibana is configured to bind to all interfaces, however, no firewall permits are configured to mitigate accidental "whoops, my ElasticSearch instance is open to the internet" situations. In order to access these services please either use SSH port forwarding or reconfigure the firewall as needed with the understanding that opening ES or Kibana to the internet is a bad idea :)
+
 ## Getting Started
 
 ### AWS Keys and SQS ARNs

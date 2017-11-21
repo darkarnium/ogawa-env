@@ -1,4 +1,4 @@
-name 'om-ogawa-env'
+name 'om-env-ogawa'
 maintainer 'Peter Adkins'
 maintainer_email 'pete@kernelpicnic.net'
 description 'Installs/Configures an Ogawa node'

@@ -43,10 +43,6 @@ iptables_rule 'iptables-permit' do
   action :enable
 end
 
-iptables_rule 'iptables-redirect' do
-  action :enable
-end
-
 # Ensure rebuild-iptables uses the right ruby...
 begin
   r = resources(template: '/usr/sbin/rebuild-iptables')
